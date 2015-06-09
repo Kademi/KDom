@@ -15,6 +15,7 @@
  */
 package co.kademi.kdom;
 
+import co.kademi.kdom.KDocument.KDomTextNode;
 import co.kademi.kdom.template.KDomTemplater;
 import co.kademi.kdom.template.TemplateLocator;
 import java.io.ByteArrayInputStream;
@@ -40,7 +41,7 @@ public class KParserTest {
     public KParserTest() {
     }
 
-    @Test
+    //@Test
     public void test() {
         JexlEngine jexl = new JexlEngine();
         Customer c1 = new Customer("brad", "mac");
@@ -59,7 +60,27 @@ public class KParserTest {
         System.out.println("result2: " + o);
     }
 
+
     @Test
+    public void test1() throws IOException {
+        KParser k = new KParser();
+        String html = "<html>"
+                + "<title>ABC XYZ</title>"
+                + "<body>"
+                + "A,B C 123&amp; - !"
+                + "</body>"
+                + "</html>";
+        ByteArrayInputStream in = new ByteArrayInputStream(html.getBytes());
+        KDocument page = k.parse(in);
+        System.out.println("page: " + page);
+        KDocument.KDomElement elTitle = (KDocument.KDomElement) page.getRoot().getNodes().get(0);
+        System.out.println(elTitle);
+        KDomTextNode t = (KDomTextNode) elTitle.getNodes().get(0);
+        assertEquals("ABC XYZ", t.getText());
+    }
+
+
+    //@Test
     public void testSomeMethod() throws IOException {
         KParser k = new KParser();
         String html = "<!DOCTYPE html>\n"
@@ -126,7 +147,7 @@ public class KParserTest {
 
     //@Test
     public void testParseAtts() throws IOException {
-        KParser k = new KParser(new Tokenizer(), new JexlEngine());
+        KParser k = new KParser(new RegexTokenizer(), new JexlEngine());
         String html = "class='body other' id=\"yayme\"";
         Map<String, String> atts = k.parseAttributes(html);
         assertEquals(2, atts.size());

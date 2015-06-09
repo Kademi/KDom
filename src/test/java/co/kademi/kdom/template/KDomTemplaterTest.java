@@ -44,9 +44,9 @@ public class KDomTemplaterTest {
 
         String html = "<!DOCTYPE html>\n"
                 + "<html>"
-                + "<title>XXX</title>"
+                + "<title>XXX YYY ZZZ</title>"
                 + "<body class='main'>"
-                + "{{p.name}}BBB"
+                + "{{p.name}}B B B"
                 + "<ul>"
                 + "{{#customers}}"
                 + "<li>"

@@ -64,3 +64,10 @@ Specify a template in the above by changing like this:
     vars.put("customers", customers);
     ByteArrayOutputStream out = new ByteArrayOutputStream();
     t.render(page, out, vars);
+
+
+todo:
+http://stackoverflow.com/questions/6551073/how-do-you-create-a-secure-jexl-scripting-sandbox?rq=1
+
+and maybe this
+http://codeutopia.net/blog/2009/01/02/sandboxing-rhino-in-java/

@@ -23,37 +23,33 @@ import static org.junit.Assert.*;
  *
  * @author brad
  */
-public class TokenizerTest {
+public class RegexTokenizerTest {
 
-    public TokenizerTest() {
+    public RegexTokenizerTest() {
+    }
+
+    @Test
+    public void testTokeniseMath() {
+        RegexTokenizer tokenizer = new RegexTokenizer();
+
+        tokenizer.tokenize("<html><body><p>abc 123 ,&;!-</p><p>!a</p></body></html>", new RegexTokenizer.TokenHandler() {
+
+            @Override
+            public void onToken(RegexTokenizer.TokenType type, String text) {
+
+            }
+        });
+
+
     }
 
     //@Test
-//    public void testTokeniseMath() {
-//        Tokenizer tokenizer = new Tokenizer();
-//        tokenizer.add("sin|cos|exp|ln|sqrt", 1);
-//        tokenizer.add("\\(", 2);
-//        tokenizer.add("\\)", 3);
-//        tokenizer.add("\\+|-", 4);
-//        tokenizer.add("\\*|/", 5);
-//        tokenizer.add("[0-9]+", 6);
-//        tokenizer.add("[a-zA-Z][a-zA-Z0-9_]*", 7);
-//
-//        tokenizer.tokenize(" sin(x) * (1 - var_12) ");
-//
-//        for (Tokenizer.Token tok : tokenizer.getTokens()) {
-//            System.out.println("" + tok.token + " " + tok.sequence);
-//        }
-//
-//    }
-
-    @Test
     public void testTokeniseMustacheHtml() {
-        Tokenizer tokenizer = new Tokenizer();
-        Tokenizer.TokenHandler handler = new Tokenizer.TokenHandler() {
+        RegexTokenizer tokenizer = new RegexTokenizer();
+        RegexTokenizer.TokenHandler handler = new RegexTokenizer.TokenHandler() {
 
             @Override
-            public void onToken(Tokenizer.TokenType type, String text) {
+            public void onToken(RegexTokenizer.TokenType type, String text) {
                 System.out.println("" + type + " " + text);
             }
         };
@@ -64,7 +60,7 @@ public class TokenizerTest {
 
     //@Test
     public void testTokeniseMustacheHtml2() {
-        Tokenizer tokenizer = new Tokenizer();
+        RegexTokenizer tokenizer = new RegexTokenizer();
 //        tokenizer.add("<![a-zA-Z][a-zA-Z0-9_]*>", 0);
 //        tokenizer.add("<[a-zA-Z][a-zA-Z0-9_]*>", 1);
 //        tokenizer.add("</[a-zA-Z][a-zA-Z0-9_]*>", 2);
@@ -740,10 +736,10 @@ public class TokenizerTest {
 "      \n" +
 "</body>\n" +
 "</html>";
-        tokenizer.tokenize(s, new Tokenizer.TokenHandler() {
+        tokenizer.tokenize(s, new RegexTokenizer.TokenHandler() {
 
             @Override
-            public void onToken(Tokenizer.TokenType type, String text) {
+            public void onToken(RegexTokenizer.TokenType type, String text) {
                 System.out.println("" + type + " " + text);
             }
         });

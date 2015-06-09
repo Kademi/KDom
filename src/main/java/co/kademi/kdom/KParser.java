@@ -33,16 +33,16 @@ import org.apache.commons.jexl2.JexlEngine;
  */
 public class KParser {
 
-    private Tokenizer tokenizer;
+    private RegexTokenizer tokenizer;
     private final JexlEngine jexl;
 
-    public KParser(Tokenizer tokenizer, JexlEngine jexl) {
+    public KParser(RegexTokenizer tokenizer, JexlEngine jexl) {
         this.tokenizer = tokenizer;
         this.jexl = jexl;
     }
 
     public KParser() {
-        tokenizer = new Tokenizer();
+        tokenizer = new RegexTokenizer();
         jexl = new JexlEngine();
     }
 
@@ -54,12 +54,11 @@ public class KParser {
         List<String> beginTagTextStack = new ArrayList<>();
         List<List<KDocument.KDomNode>> stack = new ArrayList();
 
-        Tokenizer.TokenHandler handler = new Tokenizer.TokenHandler() {
+        RegexTokenizer.TokenHandler handler = new RegexTokenizer.TokenHandler() {
             List<KDocument.KDomNode> currentChildren;
 
             @Override
-            public void onToken(Tokenizer.TokenType type, String text) {
-                System.out.println("Token " + type + " - " + text);
+            public void onToken(RegexTokenizer.TokenType type, String text) {
                 KDocument.KDomElement newEl;
                 String beginTagText;
                 switch (type) {
@@ -67,7 +66,6 @@ public class KParser {
                         // ignore for now
                         break;
                     case OPEN_TAG:
-                        System.out.println(" - PUSH el " + text);
                         beginTagTextStack.add(0, text);
                         currentChildren = new ArrayList<>();
                         stack.add(0, currentChildren);
@@ -78,7 +76,6 @@ public class KParser {
                             throw new RuntimeException("Unbalanced tags: " + text);
                         }
                         beginTagText = beginTagTextStack.remove(0);
-                        System.out.println(" - POP el " + beginTagText);
                         beginTagText = beginTagText.substring(1, beginTagText.length() - 1);
                         if (!beginTagText.startsWith(text)) {
                             throw new RuntimeException("Unbalanced tags. Start=" + beginTagText + " finished: " + text);
@@ -109,14 +106,12 @@ public class KParser {
 
                         break;
                     case MUSTACHE_OPEN:
-                        System.out.println(" - PUSH mu " + text);
                         beginTagTextStack.add(0, text);
                         currentChildren = new ArrayList<>();
                         stack.add(0, currentChildren);
                         break;
                     case MUSTACHE_CLOSE:
                         beginTagText = beginTagTextStack.remove(0);
-                        System.out.println(" - POP mu " + beginTagText);
 
                         String startTag = beginTagText.substring(3, beginTagText.length() - 2);
                         int i = startTag.indexOf(" ");
@@ -237,7 +232,7 @@ public class KParser {
         return -1;
     }
 
-    public Tokenizer getTokenizer() {
+    public RegexTokenizer getTokenizer() {
         return tokenizer;
     }
 

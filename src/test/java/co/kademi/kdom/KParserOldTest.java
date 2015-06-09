@@ -65,7 +65,7 @@ public class KParserOldTest {
 //                + "</html>";
         JexlEngine jexl = new JexlEngine();
         //KParser p = new KParser(jexl);
-        KParser k = new KParser(new Tokenizer(), new JexlEngine());
+        KParser k = new KParser(new RegexTokenizer(), new JexlEngine());
         KDocument page = k.parse(new ByteArrayInputStream(pageHtml.getBytes()));
         assertNotNull(page.getRoot());
         KDocument template = k.parse(new ByteArrayInputStream(templateHtml.getBytes()));

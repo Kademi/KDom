@@ -64,6 +64,9 @@ public class KDomTemplater {
     }
 
     public void render(KDocument doc, OutputStream out, Map vars) {
+        if( doc.getRoot() == null ) {
+            throw new NullPointerException("Document has no root element");
+        }
         KDocument newDoc = new KDocument();
         MapContext c = new MapContext(vars);
         List<TemplateCall> contextStack = new ArrayList<>();
