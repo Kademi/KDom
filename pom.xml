@@ -10,6 +10,19 @@
     <artifactId>kdom</artifactId>
     <version>1.0.0</version>
     <packaging>jar</packaging>
+	<distributionManagement>
+		<repository>
+			<id>ettrema-repo</id>
+			<url>http://milton.io/maven/</url>
+		</repository>
+		<snapshotRepository>
+			<uniqueVersion>false</uniqueVersion>
+			<id>ettrema-repo</id>
+			<url>http://milton.io/maven/</url>
+		</snapshotRepository>
+	</distributionManagement>
+
+    
     <build>
         <plugins>
             <plugin>
